@@ -7,5 +7,6 @@ urlpatterns = [
     path('pri/', pri_group),
     path('pri/<int:number_student>/', pri_id),
     path('pri/<slug:cat>/', categories),
-
+    path("year/<int:year_number>/", year_handler)
 ]
+

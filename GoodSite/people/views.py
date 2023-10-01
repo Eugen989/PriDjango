@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError, HttpResponseBadRequest, HttpResponseForbidden
+from django.template import RequestContext
 from django.shortcuts import render
 
 pri_data = {
@@ -15,6 +16,30 @@ pri_data = {
         '11' : ['Терешин Роман Павлович', '2004'],
         '12' : ['Чертков Федор Андреевич', '2001'],
     }
+
+year_animal = {
+    1 : "козы",
+    2 : "обезьяны",
+    3 : "петуха",
+    4 : "собаки",
+    5 : "свиньи",
+    6 : "крысы",
+    7 : "быка",
+    8 : "тигра",
+    9 : "кролика",
+    10 : "дракона",
+    11 : "змея",
+}
+class year_interpreter():
+    def __init__(self, year):
+        self.year = int(year)
+    def print(self):
+        if int(self.year) >= 2015 and int(self.year) <= 2025:
+            return f"Год {year_animal[self.year - 2014]}"
+        else:
+            return "Такого года нету"
+
+
 
 # Create your views here.
 def index(request):
@@ -36,7 +61,7 @@ def pri_group(request):
         conclusion += mas_of_info[0]
         conclusion += '</p>'
 
-    return HttpResponse(out)
+    return HttpResponse(conclusion)
 
 
 def pri_id(request, number_student):
@@ -54,5 +79,20 @@ def pri_id(request, number_student):
 def categories(request, cat):
     return HttpResponse('<h1> Ошибка </h1> <h3> Такого студента не существует </h3>')
 
+def year_handler(request, year_number):
+    y_i = year_interpreter(year_number)
+    return HttpResponse(f"<h1> {y_i.print()} </h1>")
 def pageNotFound(request, exception):
     return HttpResponseNotFound("<h1> Страница не найдена проверьте адресс. </h1>")
+
+def page_bad_request_400(request, exception):
+    return HttpResponseBadRequest("<h1> Плохой запрос </h1>")
+
+def page_forbiden_403(request, exception):
+    return HttpResponseNotFound('<h1> Сервер потерял запрос </h1>')
+
+def page_not_found_404(request, exception):
+    return HttpResponseNotFound('<h1> Страница не найдена. Проверьте адрес! </h1>')
+
+def page_server_error_500(exception):
+    return HttpResponseServerError('<h1> Ошибка cтраницы </h1>')
