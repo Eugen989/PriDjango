@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError, HttpResponseBadRequest, HttpResponseForbidden
 from django.template import RequestContext
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 pri_data = {
         '1' : ['Абрамов Александр Альбертович', '2004'],
@@ -33,11 +33,13 @@ year_animal = {
 class year_interpreter():
     def __init__(self, year):
         self.year = int(year)
+    @property
     def print(self):
         if int(self.year) >= 2015 and int(self.year) <= 2025:
             return f"Год {year_animal[self.year - 2014]}"
         else:
-            return "Такого года нету"
+            #raise PermissionDenied()
+            return redirect("/home", permanent=True)
 
 
 
@@ -45,12 +47,12 @@ class year_interpreter():
 def index(request):
     get = request.GET
     get_1 = dict(get)
-    get_2 = get_1['name'][0]
-    print(get_2)
-    return HttpResponse(f"{get_2}")
+    print(get_1[name])
+    return HttpResponse(f"Пусто")
 
 
 def about(request):
+    return redirect("spisok_pri", '12')
     return HttpResponse('<h1> БГИТУ </h1>')
 
 
@@ -81,15 +83,15 @@ def categories(request, cat):
 
 def year_handler(request, year_number):
     y_i = year_interpreter(year_number)
-    return HttpResponse(f"<h1> {y_i.print()} </h1>")
+    return HttpResponse(f"<h1> {y_i.print} </h1>")
 def pageNotFound(request, exception):
-    return HttpResponseNotFound("<h1> Страница не найдена проверьте адресс. </h1>")
+    return HttpResponseNotFound("<h1> +Страница не найдена проверьте адресс. </h1>")
 
 def page_bad_request_400(request, exception):
     return HttpResponseBadRequest("<h1> Плохой запрос </h1>")
 
 def page_forbiden_403(request, exception):
-    return HttpResponseNotFound('<h1> Сервер потерял запрос </h1>')
+    return HttpResponseNotFound('<h1> Такого года нету </h1>')
 
 def page_not_found_404(request, exception):
     return HttpResponseNotFound('<h1> Страница не найдена. Проверьте адрес! </h1>')
