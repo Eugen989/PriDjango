@@ -6,6 +6,7 @@ urlpatterns = [
     path('about/', about, name="about"),
     path('pri/<int:number_student>/', pri_id, name="spisok_pri"),
     path('pri/<slug:cat>/', categories),
-    path("year/<int:year_number>/", year_handler, name="year")
+    path("year/<int:year_number>/", year_handler, name="year"),
+    path('post/', post_detail),
 ]
 

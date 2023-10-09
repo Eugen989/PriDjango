@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError, HttpResponseBadRequest, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render, redirect
 
@@ -47,7 +47,7 @@ class year_interpreter():
 def index(request):
     get = request.GET
     get_1 = dict(get)
-    print(get_1[name])
+    #print(get_1[name])
     return HttpResponse(f"Пусто")
 
 
@@ -82,8 +82,32 @@ def categories(request, cat):
     return HttpResponse('<h1> Ошибка </h1> <h3> Такого студента не существует </h3>')
 
 def year_handler(request, year_number):
-    y_i = year_interpreter(year_number)
-    return HttpResponse(f"<h1> {y_i.print} </h1>")
+
+    if year_number >= 2015 and year_number <= 2025:
+        y_i = year_interpreter(year_number)
+        return HttpResponse(f"<h1> {y_i.print} </h1>")
+    else:
+        return redirect("about")
+
+
+def post_detail(request):
+    get = request.GET
+    if(get):
+        get = dict(get)
+        str_get = ""
+        for i, j in get.items():
+            str_get += i
+            str_get += '='
+            str_get += j[0]
+            str_get += "|"
+        #str_get += get[0]
+        str_get = str_get[:len(str_get) - 1]
+        return HttpResponse(f"<h1> {str_get} </h1>")
+    else:
+        return HttpResponse(f"<h1> Get is empty </h1>")
+
+
+
 def pageNotFound(request, exception):
     return HttpResponseNotFound("<h1> +Страница не найдена проверьте адресс. </h1>")
 
