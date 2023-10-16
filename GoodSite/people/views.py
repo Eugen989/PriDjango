@@ -39,16 +39,49 @@ class year_interpreter():
             return f"Год {year_animal[self.year - 2014]}"
         else:
             #raise PermissionDenied()
-            return redirect("/home", permanent=True)
+            return redirect(f"/home", permanent=True)
 
+menu = ["Коротко", "Подробнее", "Главное"]
+data_db = [
+    {
+        "id": 1,
+        "title": "Илон Маск",
+        "content": "Биография Илона Маска",
+        "is_public": True
+     },
 
+    {
+        "id": 2,
+        "title": "Жириновский",
+        "content": "Биография Жириновскорого",
+        "is_public": True
+     },
+
+    {
+        "id": 3,
+        "title": "Баба Яга",
+        "content": "Биография бабы яги",
+        "is_public": False
+     }
+
+]
+float = 3.7
 
 # Create your views here.
 def index(request):
-    get = request.GET
-    get_1 = dict(get)
+    #get = request.GET
+    #get_1 = dict(get)
     #print(get_1[name])
-    return HttpResponse(f"Пусто")
+    #return HttpResponse(f"Пусто")
+
+    data = {
+        "title": "Главная страница",
+        "menu": menu,
+        "float": float,
+        "posts": data_db
+    }
+
+    return render(request, "women/index.html", data)
 
 
 def about(request):
