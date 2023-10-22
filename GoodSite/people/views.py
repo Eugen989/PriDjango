@@ -30,12 +30,24 @@ year_animal = {
     10 : "дракона",
     11 : "змея",
 }
+
+class new_year():
+    def __init__(self, year):
+        self.year = int(year)
+
+    def print(self):
+        if int(self.year) >= 2015 and int(self.year) <= 2025:
+            return f"Год {year_animal[self.year - 2014]}"
+        else:
+            return redirect(f"/home", permanent=True)
+
 class year_interpreter():
     def __init__(self, year):
         self.year = int(year)
     @property
     def print(self):
         if int(self.year) >= 2015 and int(self.year) <= 2025:
+            return "Всё хорошо"
             return f"Год {year_animal[self.year - 2014]}"
         else:
             #raise PermissionDenied()
@@ -138,6 +150,14 @@ def post_detail(request):
         return HttpResponse(f"<h1> {str_get} </h1>")
     else:
         return HttpResponse(f"<h1> Get is empty </h1>")
+
+
+def get_data_type(requenst):
+    year = new_year(2016)
+    return HttpResponse(f"<h1> {year.print()} </h1> <br><br> <h1> {data_db} </h1>")
+
+def get_data_for_number(request, number):
+    return HttpResponse(f"<h1> Всё хорошо </h1>")
 
 
 
