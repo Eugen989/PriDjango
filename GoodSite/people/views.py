@@ -160,6 +160,52 @@ def get_data_for_number(request, number):
     return HttpResponse(f"<h1> Всё хорошо </h1>")
 
 
+def split_line(request):
+    line = "Hello, my, \"world or, not\""
+    sep = ","
+    parse_line = line
+    list = []
+    i = 0
+    zap_i = 0
+    last_i = 0
+    sep_symbol = False
+
+    if line == len(line)*' ':
+        list.append('')
+    else:
+        while(i < len(line)):
+            if i == len(parse_line) - 1:
+                list.append(parse_line[zap_i:i + 1])
+                break
+            if parse_line[i] == "\"":
+                sep_symbol = not sep_symbol
+
+            if parse_line[i] == sep and not sep_symbol:
+                list.append(parse_line[zap_i:i])
+                i = i + 1
+                zap_i = i
+                no_sep = False
+            i += 1
+        if no_sep:
+            list.append(line)
+
+    n = 0
+    sep_symbol = False
+
+    # for j in range(len(list)):
+    # if "\"" in list[j]:
+    # for k in range(len(list[j])):
+    # if list[j][k] == "\"":
+    # list[j] = list[j][k+1:list[j].find("\"")]
+
+
+
+    dict = {}
+    dict['str'] = list
+    return render(request, 'women/second.html', dict)
+    #return HttpResponse(f'<h1> {list} </h1>')
+
+
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound("<h1> +Страница не найдена проверьте адресс. </h1>")
