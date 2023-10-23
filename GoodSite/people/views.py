@@ -162,7 +162,7 @@ def get_data_for_number(request, number):
 
 
 def split_line(request):
-    line = "Hello, my, \"world or, not\" ku, ku, \",,\""
+    line = "Hello, my, \"world or, not\" ku, ku, \",,\",   "
     sep = ","
     parse_line = line
     list = []
@@ -172,35 +172,35 @@ def split_line(request):
     sep_symbol = False
     first_symb = False
 
-    if line == len(line)*' ':
-        list.append('')
-    else:
-        while(i < len(line)):
-            if i == len(parse_line) - 1:
+    while(i < len(line)):
+        if i == len(parse_line) - 1:
+            if not (list == (i - zap_i) * ' '):
+                list.append('')
                 list.append(parse_line[zap_i:i + 1])
                 break
-            if parse_line[i] == "\"":
-                sep_symbol = not sep_symbol
 
-            if not first_symb and parse_line[i] == ' ':
-                zap_i += 1
-                print("Увелечение zap_i")
+        if parse_line[i] == "\"":
+            sep_symbol = not sep_symbol
 
-            elif not first_symb and parse_line[i] != " ":
-                first_symb = True
+        # if not first_symb and parse_line[i] == ' ':
+        #     zap_i += 1
+        #     print("Увелечение zap_i")
+        #
+        # elif not first_symb and parse_line[i] != " ":
+        #     first_symb = True
 
-            if parse_line[i] == sep and not sep_symbol:
-                if(zap_i != 0):
-                    list.append(parse_line[zap_i:i])
-                else:
-                    list.append(parse_line[zap_i:i])
-                i = i + 1
-                zap_i = i
-                no_sep = False
-                first_symb = False
-            i += 1
-        if no_sep:
-            list.append(line)
+        if parse_line[i] == sep and not sep_symbol:
+            if(zap_i != 0):
+                list.append(parse_line[zap_i:i])
+            else:
+                list.append(parse_line[zap_i:i])
+            i = i + 1
+            zap_i = i
+            no_sep = False
+            # first_symb = False
+        i += 1
+    if no_sep:
+        list.append(line)
 
     n = 0
     sep_symbol = False
