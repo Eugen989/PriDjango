@@ -97,7 +97,8 @@ def index(request):
 
 
 def about(request):
-    return redirect("spisok_pri", '12')
+    # return redirect("spisok_pri", '12')
+    return render(request, 'women/about.html')
     return HttpResponse('<h1> БГИТУ </h1>')
 
 
@@ -161,7 +162,7 @@ def get_data_for_number(request, number):
 
 
 def split_line(request):
-    line = "Hello, my, \"world or, not\""
+    line = "Hello, my, \"world or, not\" ku, ku, \",,\""
     sep = ","
     parse_line = line
     list = []
@@ -169,6 +170,7 @@ def split_line(request):
     zap_i = 0
     last_i = 0
     sep_symbol = False
+    first_symb = False
 
     if line == len(line)*' ':
         list.append('')
@@ -180,11 +182,22 @@ def split_line(request):
             if parse_line[i] == "\"":
                 sep_symbol = not sep_symbol
 
+            if not first_symb and parse_line[i] == ' ':
+                zap_i += 1
+                print("Увелечение zap_i")
+
+            elif not first_symb and parse_line[i] != " ":
+                first_symb = True
+
             if parse_line[i] == sep and not sep_symbol:
-                list.append(parse_line[zap_i:i])
+                if(zap_i != 0):
+                    list.append(parse_line[zap_i:i])
+                else:
+                    list.append(parse_line[zap_i:i])
                 i = i + 1
                 zap_i = i
                 no_sep = False
+                first_symb = False
             i += 1
         if no_sep:
             list.append(line)
@@ -202,6 +215,7 @@ def split_line(request):
 
     dict = {}
     dict['str'] = list
+    print(dict)
     return render(request, 'women/second.html', dict)
     #return HttpResponse(f'<h1> {list} </h1>')
 

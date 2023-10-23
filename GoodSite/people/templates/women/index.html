@@ -5,6 +5,11 @@
     <title>Title</title>
 </head>
 <body style="background-color: black; color: grey;">
+
+    <p> <a href="{% url 'about' %}"> На страницу о програме </a> </p>
+
+    <p> <a href="{% url 'spisok_pri' 10 %}"> На страницу к студенту </a> </p>
+
     <h1> {{title}} </h1>
     <br>
     {% now "d l F Y H:i" %}
@@ -38,5 +43,11 @@
     </ul>
     <br>
     <hr>
+
+    <p>Bool = {{True}}</p>
+    <p>Int = {{1}}</p>
+    <p>Double = {{1.2}}</p>
+    <p>str = {{"Текст"}}</p>
+
 
 </body>
