@@ -92,7 +92,6 @@ def index(request):
         "float": float,
         "posts": data_db
     }
-
     return render(request, "women/index.html", data)
 
 
@@ -101,6 +100,16 @@ def about(request):
     return render(request, 'women/about.html')
     return HttpResponse('<h1> БГИТУ </h1>')
 
+
+def pri(request):
+    data_pri = {}
+    # for i in pri_data:
+    #     data_pri[f"pri_{i}"] = pri_data[f'{i}'][0]
+
+    print(data_pri)
+
+
+    return render(request, 'women/student.html', {"pri_data": pri_data})
 
 def pri_group(request):
     conclusion = '<h1> ПрИ-201 </h1> <p>'
@@ -162,7 +171,7 @@ def get_data_for_number(request, number):
 
 
 def split_line(request):
-    line = "Hello, my, \"world or, not\" ku, ku, \",,\",   "
+    line = "Hello, my, \"world or, not\" ku, ku , \",,\" ,   "
     sep = ","
     parse_line = line
     list = []
@@ -174,9 +183,8 @@ def split_line(request):
 
     while(i < len(line)):
         if i == len(parse_line) - 1:
-            if not (list == (i - zap_i) * ' '):
+            if (parse_line[zap_i:i] == len(parse_line[zap_i:i]) * ' '):
                 list.append('')
-                list.append(parse_line[zap_i:i + 1])
                 break
 
         if parse_line[i] == "\"":
@@ -190,7 +198,9 @@ def split_line(request):
         #     first_symb = True
 
         if parse_line[i] == sep and not sep_symbol:
-            if(zap_i != 0):
+            if(parse_line[zap_i:i] == len(parse_line[zap_i:i])*' '):
+                list.append('')
+            elif(zap_i != 0):
                 list.append(parse_line[zap_i:i])
             else:
                 list.append(parse_line[zap_i:i])
