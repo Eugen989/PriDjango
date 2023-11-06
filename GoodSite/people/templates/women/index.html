@@ -1,52 +1,6 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UNF-8">
-    <title>Title</title>
-</head>
-<body style="background-color: black; color: grey;">
+{% extends "base.html" %}
 
-    <p> <a href="{% url 'about' %}"> На страницу о програме </a> </p>
-    <p> <a href="{% url 'pri' %}"> На страницу к студенту </a> </p>
-
-    <h1> {{title}} </h1>
-    <br>
-    {% now "d l F Y H:i" %}
-    <br>
-    <hr>
-
-    <h1>{{menu}}</h1>
-    <br>
-    <hr>
-
-    <h1>{{float|add:4}}</h1>
-    <br>
-    <hr>
-
-
-    <ul>
-        {% for p in posts %}
-        {% if forloop.counter == 1 %}
-        <li> Начало </li>
-        {% endif %}
-        {% if p.is_public == True %}
-        <li>
-            <h2>{{p.title}}</h2>
-            <p>{{p.content}}</p>
-        </li>
-        {% endif %}
-        {% if forloop.last == False %}
-        <hr>
-        {% endif %}
-        {% endfor %}
-    </ul>
-    <br>
-    <hr>
-
-    <p>Bool = {{True}}</p>
-    <p>Int = {{1}}</p>
-    <p>Double = {{1.2}}</p>
-    <p>str = {{"Текст"}}</p>
-
-
-</body>
+{% block content_home %}
+{% include "women/includes/nav.html" %}
+<h1>главная</h1>
+{% endblock %}

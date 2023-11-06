@@ -2,6 +2,8 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerEr
 from django.template import RequestContext
 from django.shortcuts import render, redirect
 
+
+
 pri_data = {
         '1' : ['Абрамов Александр Альбертович', '2004'],
         '2' : ['Близнюк Илья Сергеевич', '2005'],
@@ -53,7 +55,7 @@ class year_interpreter():
             #raise PermissionDenied()
             return redirect(f"/home", permanent=True)
 
-menu = ["Коротко", "Подробнее", "Главное"]
+menu = [{"title": "Главная", "url_n": "home"}, {"title": "О сайте", "url_n": "about"}]
 data_db = [
     {
         "id": 1,
@@ -81,10 +83,6 @@ float = 3.7
 
 # Create your views here.
 def index(request):
-    #get = request.GET
-    #get_1 = dict(get)
-    #print(get_1[name])
-    #return HttpResponse(f"Пусто")
 
     data = {
         "title": "Главная страница",
@@ -97,7 +95,7 @@ def index(request):
 
 def about(request):
     # return redirect("spisok_pri", '12')
-    return render(request, 'women/about.html')
+    return render(request, 'women/about.html', {"title": "О программе", "menu":menu})
     return HttpResponse('<h1> БГИТУ </h1>')
 
 
