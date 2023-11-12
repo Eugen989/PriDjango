@@ -1,52 +1,37 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UNF-8">
-    <title>Title</title>
-</head>
-<body style="background-color: black; color: grey;">
+{% extends 'base.html' %}
 
-    <p> <a href="{% url 'about' %}"> На страницу о програме </a> </p>
-    <p> <a href="{% url 'pri' %}"> На страницу к студенту </a> </p>
+{% block content1 %}
+{% include 'women/includes/nav.html' %}
+<br>
+<p><a href="{% url 'about' %}"> На страницу о программе</a></p>
 
-    <h1> {{title}} </h1>
-    <br>
-    {% now "d l F Y H:i" %}
-    <br>
-    <hr>
+<p><a href="{% url 'spisok_pri' 10 %}"> На страницу к студенту</a></p>
 
-    <h1>{{menu}}</h1>
-    <br>
-    <hr>
+<h1> {{title|upper|truncatechars:6}} </h1>
+<br>
+<hr>
+{{menu}}
 
-    <h1>{{float|add:4}}</h1>
-    <br>
-    <hr>
-
-
-    <ul>
-        {% for p in posts %}
-        {% if forloop.counter == 1 %}
-        <li> Начало </li>
-        {% endif %}
-        {% if p.is_public == True %}
-        <li>
-            <h2>{{p.title}}</h2>
-            <p>{{p.content}}</p>
-        </li>
-        {% endif %}
-        {% if forloop.last == False %}
+<h1> {{float|add:'4'}} </h1>
+<br>
+<hr>
+<br>
+<hr>
+<br>
+{% include 'women/includes/nav.html' %}
+<ul>
+    {% for p in posts %}
+    {% if p.is_public %}
+    <li>
+        <h2>{{p.title}}</h2>
+        <p>{{p.content}}</p>
+        {% if not forloop.last %}
         <hr>
         {% endif %}
-        {% endfor %}
-    </ul>
-    <br>
-    <hr>
-
-    <p>Bool = {{True}}</p>
-    <p>Int = {{1}}</p>
-    <p>Double = {{1.2}}</p>
-    <p>str = {{"Текст"}}</p>
-
-
-</body>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% include 'women/includes/nav.html' %}
+{{integer}}
+{% endblock %}

@@ -53,7 +53,8 @@ class year_interpreter():
             #raise PermissionDenied()
             return redirect(f"/home", permanent=True)
 
-menu = ["Коротко", "Подробнее", "Главное"]
+menu = [{'title': 'Главная', 'url_n': 'home'}, {'title': 'О сайте', 'url_n': 'about'}, {'title': 'О студентах', 'url_n': 'pri'}]
+
 data_db = [
     {
         "id": 1,
@@ -86,18 +87,20 @@ def index(request):
     #print(get_1[name])
     #return HttpResponse(f"Пусто")
 
-    data = {
-        "title": "Главная страница",
-        "menu": menu,
-        "float": float,
-        "posts": data_db
-    }
+    data = {'title': "Главная страница",
+        'menu': menu,
+        'float': 3.8,
+        'posts': data_db
+        }
     return render(request, "women/index.html", data)
 
 
 def about(request):
     # return redirect("spisok_pri", '12')
-    return render(request, 'women/about.html')
+
+    data = {'title': "О программе", 'menu': menu}
+
+    return render(request, 'women/about.html', data)
     return HttpResponse('<h1> БГИТУ </h1>')
 
 
@@ -106,10 +109,10 @@ def pri(request):
     # for i in pri_data:
     #     data_pri[f"pri_{i}"] = pri_data[f'{i}'][0]
 
-    print(data_pri)
+    data = {'title': "Списки студентов", 'menu': menu, "pri_data": pri_data}
+    print(pri_data)
 
-
-    return render(request, 'women/student.html', {"pri_data": pri_data})
+    return render(request, 'women/student.html', data)
 
 def pri_group(request):
     conclusion = '<h1> ПрИ-201 </h1> <p>'

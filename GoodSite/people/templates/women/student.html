@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <p> <a href="{% url 'home' %}"> На главную страницу </a> </p>
-    <p> <a href="{% url 'about' %}"> На страницу о програме </a> </p>
+{% extends 'base.html' %}
 
-    <br>
-    <br>
-    <p>Выберите студента</p>
+{% block content1 %}
 
-    {% for n in pri_data.values %}
-    <br>
-    <a href="{% url 'spisok_pri' forloop.counter %}"> {{n.0}} </a>
-    {% endfor %}
-</body>
-</html>
+<p>Выберите студента</p>
+
+{% for n in pri_data.values %}
+<br>
+<a href="{% url 'spisok_pri' forloop.counter %}"> {{n.0}} </a>
+{% endfor %}
+
+{% endblock %}
