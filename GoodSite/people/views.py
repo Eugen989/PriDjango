@@ -127,11 +127,13 @@ def pri_group(request):
 def pri_id(request, number_student):
 
     if str(number_student) in pri_data:
-        conclusion = '<h1> ПрИ-201 </h1> <p>'
+        conclusion = ''
         group_mas = pri_data[str(number_student)]
         conclusion += f'{group_mas[0]} {group_mas[1]}'
-        conclusion += '</p>'
-        return HttpResponse(conclusion)
+
+        data = {'title': "ПрИ-201", 'menu': menu, "conclusion": conclusion, "number": number_student}
+        return render(request, "women/one_student.html", data)
+        #return HttpResponse(conclusion)
     else:
         return HttpResponse('<h1> Ошибка </h1> <h3> Такого студента не существует </h3>')
 
