@@ -17,6 +17,11 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
+#python manage.py collectstatic собирает статические файлы перед загрузкой на сервер
+
+#python manage.py makemigrations создание миграции
+#python manage.py sqlmigrate women 0001 просмотр sql запроса миграции
+#python manage.py migrate выполнение миграций
 
 if __name__ == '__main__':
     main()
